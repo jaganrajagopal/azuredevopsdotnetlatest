@@ -6,7 +6,11 @@ namespace dotnetunit
         [TestMethod]
         public void TestMethod1()
         {
-            Assert.IsTrue(true);
+            var a = 10;
+            var b = 20;
+            var c = a + b;
+            var result = 30;
+            Assert.AreEqual(c, result);
         }
     }
 }
