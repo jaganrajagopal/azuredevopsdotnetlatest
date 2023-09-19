@@ -68,9 +68,3 @@ steps:
     appName: 'devenvwebapps'
     package: '$(System.DefaultWorkingDirectory)/**/*.zip'
     deploymentMethod: 'auto'
-- task: DownloadPipelineArtifact@2
-  displayName: 'drop the location of artificats location'
-  inputs:
-    source: 'current'
-    artifact: 'drop'
-    path: '$(Pipeline.Workspace)'
