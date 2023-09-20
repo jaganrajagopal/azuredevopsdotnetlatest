@@ -39,17 +39,7 @@ steps:
     projects: 'dotnetunit/*.csproj'
     arguments: '--configuration $(buildConfiguration)'   
     
-- task: DotNetCoreCLI@2
-  displayName: 'Publish the dotnetcore'
-  inputs:
-    command: publish
-    publishWebProjects: True   
-    zipAfterPublish: True   
-- task: PublishBuildArtifacts@1
-  displayName: 'location as  drop folder'
-  inputs:
-    PathtoPublish: '$(Build.ArtifactStagingDirectory)/drop'
-    ArtifactName: 'drop'
+
     
 
 #run test case 
@@ -66,6 +56,20 @@ steps:
   inputs:
     codeCoverageTool: 'Cobertura'
     summaryFileLocation: '$(Agent.TempDirectory)/**/coverage.cobertura.xml'     
+
+#publishing the code 
+- task: DotNetCoreCLI@2
+  inputs:
+    command: publish
+    publishWebProjects: True
+    arguments: '--configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)'
+    zipAfterPublish: True
+
+# this code takes all the files in $(Build.ArtifactStagingDirectory) and uploads them as an artifact of your build.
+- task: PublishPipelineArtifact@1
+  inputs:
+    targetPath: '$(Build.ArtifactStagingDirectory)' 
+    artifactName: 'dotnetpublishcode'
 - task: AzureWebApp@1
   displayName: 'deploy on the Azurewebapps'
   inputs:
