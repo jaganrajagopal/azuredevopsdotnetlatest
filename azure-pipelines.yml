@@ -57,7 +57,25 @@ steps:
     codeCoverageTool: 'Cobertura'
     summaryFileLocation: '$(Agent.TempDirectory)/**/coverage.cobertura.xml'     
 
+
+#start code 
+- task: DotNetCoreCLI@2
+  displayName: 'default Publish'
+  inputs:
+    command: publish
+    configuration: $(buildConfiguration)
+    packagesToPush: '$(System.DefaultWorkingDirectory)'
+    
+
+- task: PublishBuildArtifacts@1
+  displayName: 'Publish Artifacts'
+  inputs:
+    PathtoPublish: '$(System.DefaultWorkingDirectory)'
+    ArtifactName: drop
+
+#end code
 #publishing the code 
+
 - task: DotNetCoreCLI@2
   inputs:
     command: publish
@@ -69,7 +87,7 @@ steps:
 - task: PublishPipelineArtifact@1
   displayName: 'publishing artifacts on this path'
   inputs:
-    targetPath: '$(Build.ArtifactStagingDirectory)' 
+    targetPath: '$(build.ArtifactStagingDirectory)' 
     artifactName: 'dotnetpublishcode'
 - task: AzureWebApp@1
   displayName: 'deploy on the Azurewebapps'
@@ -77,5 +95,6 @@ steps:
     azureSubscription: 'Azure subscription 1(1b5f28cb-5b3c-419e-84d4-09403138d50c)'
     appType: 'webApp'
     appName: 'devenvwebapps'
-    package: '$(System.ArtifactStagingDirectory)/**/*.zip'
+    package: '$(build.ArtifactStagingDirectory)/WebApp.zip'
     deploymentMethod: 'auto'
+
