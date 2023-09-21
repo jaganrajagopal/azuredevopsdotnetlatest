@@ -77,5 +77,5 @@ steps:
     azureSubscription: 'Azure subscription 1(1b5f28cb-5b3c-419e-84d4-09403138d50c)'
     appType: 'webApp'
     appName: 'devenvwebapps'
-    package: '$(System.ArtifactStagingDirectory)/*.zip'
+    package: '$(System.ArtifactStagingDirectory)/**/*.zip'
     deploymentMethod: 'auto'
