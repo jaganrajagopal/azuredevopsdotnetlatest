@@ -51,29 +51,7 @@ steps:
     projects: 'dotnetunit/*.csproj'
     arguments: '--configuration $(buildConfiguration) --collect:"XPlat Code Coverage" -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=cobertura'
     publishTestResults: true
-- task: PublishCodeCoverageResults@1
-  displayName: 'Publish code coverage report'
-  inputs:
-    codeCoverageTool: 'Cobertura'
-    summaryFileLocation: '$(Agent.TempDirectory)/**/coverage.cobertura.xml'     
 
-
-#start code 
-- task: DotNetCoreCLI@2
-  displayName: 'default Publish'
-  inputs:
-    command: publish
-    configuration: $(buildConfiguration)
-    packagesToPush: '$(System.DefaultWorkingDirectory)'
-    
-
-- task: PublishBuildArtifacts@1
-  displayName: 'Publish Artifacts'
-  inputs:
-    PathtoPublish: '$(System.DefaultWorkingDirectory)'
-    ArtifactName: drop
-
-#end code
 #publishing the code 
 
 - task: DotNetCoreCLI@2
