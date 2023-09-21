@@ -67,6 +67,7 @@ steps:
 
 # this code takes all the files in $(Build.ArtifactStagingDirectory) and uploads them as an artifact of your build.
 - task: PublishPipelineArtifact@1
+  displayName: 'publishing artifacts on this path'
   inputs:
     targetPath: '$(Build.ArtifactStagingDirectory)' 
     artifactName: 'dotnetpublishcode'
@@ -76,5 +77,5 @@ steps:
     azureSubscription: 'Azure subscription 1(1b5f28cb-5b3c-419e-84d4-09403138d50c)'
     appType: 'webApp'
     appName: 'devenvwebapps'
-    package: '$(System.DefaultWorkingDirectory)/**/*.zip'
+    package: '$(System.ArtifactStagingDirectory)/*.zip'
     deploymentMethod: 'auto'
